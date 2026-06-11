@@ -8,16 +8,13 @@ public class FlightSearchService : IFlightSearchService
 {
     private readonly FlightService _flightService;
     private readonly IFareCalculator _fareCalculator;
-    private readonly ILogger _logger;
 
     public FlightSearchService(
         FlightService flightService,
-        IFareCalculator fareCalculator,
-        ILogger logger)
+        IFareCalculator fareCalculator)
     {
         _flightService = flightService;
         _fareCalculator = fareCalculator;
-        _logger = logger;
     }
 
     public IEnumerable<FlightSearchResponse> SearchFlights(
@@ -28,9 +25,6 @@ public class FlightSearchService : IFlightSearchService
         int passengers,
         CabinClass cabinClass)
     {
-        _logger.LogInformation(
-         "Search flights response: Passengers={Passengers}, Airline={Airline}, From={From}, To={To}, DepartureDate={DepartureDate}, CabinClass={CabinClass}",
-         passengers, airline, from, to, departureDate, cabinClass);
         return _flightService
             .GetAvailableFlights(from, to, departureDate, passengers, cabinClass)
             .Where(f => f.Airline == airline)
