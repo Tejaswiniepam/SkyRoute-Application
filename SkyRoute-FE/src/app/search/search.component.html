@@ -1,0 +1,141 @@
+<div class="sr-page">
+
+  <!-- Hero Header -->
+  <header class="sr-header">
+    <div class="sr-header__inner">
+      <div class="sr-logo">
+        <span class="sr-logo__icon">✈</span>
+        <span class="sr-logo__name">SkyRoute</span>
+      </div>
+      <p class="sr-header__tagline">Find your next flight</p>
+    </div>
+  </header>
+
+  <!-- Search Form -->
+  <section class="sr-search-card">
+    <div class="sr-search-card__inner">
+      <div class="sr-form-row">
+
+        <div class="sr-field">
+          <label class="sr-label" for="from">From</label>
+          <select id="from" class="sr-select" [(ngModel)]="form.from" name="from">
+            <option value="">Select origin</option>
+            <option *ngFor="let ap of airports" [value]="ap">{{ ap }}</option>
+          </select>
+        </div>
+
+        <div class="sr-swap">→</div>
+
+        <div class="sr-field">
+          <label class="sr-label" for="to">To</label>
+          <select id="to" class="sr-select" [(ngModel)]="form.to" name="to">
+            <option value="">Select destination</option>
+            <option *ngFor="let ap of airports" [value]="ap" [disabled]="ap === form.from">{{ ap }}</option>
+          </select>
+        </div>
+
+        <div class="sr-field">
+          <label class="sr-label" for="date">Departure Date</label>
+          <input id="date" class="sr-input" type="date" [(ngModel)]="form.departureDate" name="departureDate" />
+        </div>
+
+        <div class="sr-field sr-field--sm">
+          <label class="sr-label" for="pax">Passengers</label>
+          <input id="pax" class="sr-input" type="number" min="1" max="9" [(ngModel)]="form.passengers" name="passengers" />
+        </div>
+
+        <div class="sr-field">
+          <label class="sr-label" for="cabin">Cabin Class</label>
+          <select id="cabin" class="sr-select" [(ngModel)]="form.cabinClass" name="cabinClass">
+            <option [ngValue]="CabinClass.Economy">Economy</option>
+            <option [ngValue]="CabinClass.Bussiness">Bussiness</option>
+            <option [ngValue]="CabinClass.FirstClass">FirstClass</option>
+          </select>
+        </div>
+
+        <div class="sr-field sr-field--action">
+          <button class="sr-btn sr-btn--primary" (click)="onSearch()" [disabled]="!isFormValid || loading">
+            <span *ngIf="!loading">Search Flights</span>
+            <span *ngIf="loading" class="sr-spinner">Searching…</span>
+          </button>
+        </div>
+
+      </div>
+
+      <p class="sr-hint" *ngIf="form.from && form.to && form.from === form.to">
+        Origin and destination cannot be the same.
+      </p>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="sr-results" *ngIf="searched">
+
+    <div class="sr-error" *ngIf="errorMessage">
+      <span>⚠</span> {{ errorMessage }}
+    </div>
+
+    <div class="sr-empty" *ngIf="!errorMessage && flights.length === 0">
+      <p class="sr-empty__title">No flights found</p>
+      <p class="sr-empty__sub">Try a different date. Available routes: NYC→LAX, NYC→MIA, LAX→ORD, ORD→DFW, DFW→ATL, ATL→SFO</p>
+    </div>
+
+    <div class="sr-flight-list" *ngIf="flights.length > 0">
+      <p class="sr-results__count">{{ flights.length }} flight{{ flights.length !== 1 ? 's' : '' }} found — select one to book</p>
+
+      <div class="sr-flight-card" *ngFor="let flight of flights">
+
+        <div class="sr-flight-card__airline">
+          <span class="sr-airline-badge" [class.sr-airline-badge--budget]="flight.airline === 'BudgetWings'">
+            {{ flight.airline }}
+          </span>
+          <span class="sr-flight-id">FL{{ flight.flightId }}</span>
+        </div>
+
+        <div class="sr-flight-card__route">
+          <div class="sr-route-point">
+            <span class="sr-route-code">{{ flight.origin }}</span>
+            <span class="sr-route-time">{{ flight.departureTime | date:'HH:mm' }}</span>
+          </div>
+          <div class="sr-route-line">
+            <span class="sr-route-duration">{{ getFlightDuration(flight) }}</span>
+            <div class="sr-route-track">
+              <div class="sr-route-dot"></div>
+              <div class="sr-route-dash"></div>
+              <span class="sr-route-plane">✈</span>
+              <div class="sr-route-dash"></div>
+              <div class="sr-route-dot"></div>
+            </div>
+            <span class="sr-route-miles">{{ flight.distanceMiles | number }} mi</span>
+          </div>
+          <div class="sr-route-point">
+            <span class="sr-route-code">{{ flight.destination }}</span>
+            <span class="sr-route-time">{{ flight.arrivalTime | date:'HH:mm' }}</span>
+          </div>
+        </div>
+
+        <div class="sr-flight-card__fare">
+          <!-- BudgetWings shows discount -->
+          <div class="sr-fare-detail" *ngIf="flight.discountAmount">
+            <span class="sr-fare-base">Base: ${{ flight.baseFare | number:'1.2-2' }}</span>
+            <span class="sr-fare-discount">-${{ flight.discountAmount | number:'1.2-2' }} discount</span>
+          </div>
+          <!-- GlobalAir shows surcharge -->
+          <div class="sr-fare-detail" *ngIf="flight.fuelSurcharge">
+            <span class="sr-fare-base">Base: ${{ flight.baseFare | number:'1.2-2' }}</span>
+            <span class="sr-fare-surcharge">+${{ flight.fuelSurcharge | number:'1.2-2' }} surcharge</span>
+          </div>
+          <div class="sr-fare">
+            <span class="sr-fare__amount">${{ flight.finalFare | number:'1.2-2' }}</span>
+            <span class="sr-fare__label">per person</span>
+          </div>
+          <button class="sr-btn sr-btn--book" (click)="onBook(flight)">
+            Book →
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+</div>

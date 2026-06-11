@@ -1,0 +1,522 @@
+// ── Tokens ──────────────────────────────────────────────────────
+$sky-900: #0a1628;
+$sky-800: #0f2240;
+$sky-600: #1a3a6b;
+$sky-400: #2e6fce;
+$sky-200: #7fb3f5;
+$sky-50:  #eaf3ff;
+
+$accent:  #f59e0b;
+$danger:  #ef4444;
+$success: #10b981;
+
+$text-primary:   #0a1628;
+$text-secondary: #4b6080;
+$text-muted:     #8fa3bf;
+
+$radius-sm: 6px;
+$radius-md: 12px;
+$radius-lg: 20px;
+
+$font-display: 'Georgia', 'Times New Roman', serif;
+$font-body:    system-ui, -apple-system, sans-serif;
+
+@use 'sass:color';
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+// ── Page ────────────────────────────────────────────────────────
+.bk-page {
+  min-height: 100vh;
+  background: linear-gradient(160deg, $sky-900 0%, $sky-800 40%, $sky-600 100%);
+  font-family: $font-body;
+  color: $text-primary;
+}
+
+// ── Header ──────────────────────────────────────────────────────
+.bk-header {
+  padding: 1.5rem;
+
+  &__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.bk-back {
+  background: none;
+  border: none;
+  color: $sky-200;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0.4rem 0;
+  transition: color 0.15s;
+  &:hover { color: #fff; }
+}
+
+.bk-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &__icon {
+    font-size: 1.4rem;
+    color: $accent;
+    transform: rotate(-10deg);
+    display: inline-block;
+  }
+
+  &__name {
+    font-family: $font-display;
+    font-size: 1.5rem;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+}
+
+// ── Content layout ───────────────────────────────────────────────
+.bk-content { padding: 0 1.5rem 3rem; }
+
+.bk-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 2rem;
+  align-items: start;
+}
+
+// ── Form Section ─────────────────────────────────────────────────
+.bk-form-section {
+  background: #fff;
+  border-radius: $radius-lg;
+  padding: 2rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+
+.bk-section-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: $text-primary;
+  margin-bottom: 0.3rem;
+}
+
+.bk-section-sub {
+  font-size: 0.85rem;
+  color: $text-secondary;
+  margin-bottom: 1.75rem;
+}
+
+.bk-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+// ── Multi-passenger cards ─────────────────────────────────────────
+.bk-passenger-card {
+  border: 1.5px solid #e2eaf4;
+  border-radius: $radius-md;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  background: #fafcff;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e2eaf4;
+  }
+}
+
+.bk-passenger-num {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: $sky-600;
+}
+
+.bk-passenger-lead {
+  font-size: 0.7rem;
+  background: $sky-50;
+  color: $sky-400;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+// ── Fields ──────────────────────────────────────────────────────
+.bk-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.bk-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.bk-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $text-secondary;
+}
+
+.bk-input {
+  padding: 0.7rem 0.9rem;
+  border: 1.5px solid #d1dcea;
+  border-radius: $radius-sm;
+  font-size: 0.95rem;
+  color: $text-primary;
+  transition: border-color 0.15s;
+
+  &:focus {
+    outline: none;
+    border-color: $sky-400;
+    box-shadow: 0 0 0 3px rgba($sky-400, 0.15);
+  }
+
+  &::placeholder { color: $text-muted; }
+}
+
+.bk-readonly {
+  padding: 0.7rem 0.9rem;
+  background: #f8fafc;
+  border: 1.5px solid #e2eaf4;
+  border-radius: $radius-sm;
+  font-size: 0.95rem;
+  color: $text-secondary;
+  font-weight: 500;
+}
+
+.bk-field-error {
+  font-size: 0.75rem;
+  color: $danger;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: -0.25rem;
+}
+
+// ── Error ────────────────────────────────────────────────────────
+.bk-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: $radius-sm;
+  padding: 0.75rem 1rem;
+  color: $danger;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+// ── Buttons ──────────────────────────────────────────────────────
+.bk-btn {
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: $radius-sm;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  width: 100%;
+
+  &--confirm {
+    background: $sky-400;
+    color: #fff;
+    letter-spacing: 0.02em;
+
+    &:hover:not(:disabled) { background: color.adjust($sky-400, $lightness: -8%); }
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+  }
+
+  &--new {
+    background: $accent;
+    color: $sky-900;
+    margin-top: 1.5rem;
+
+    &:hover { background: color.adjust($accent, $lightness: -8%); }
+  }
+}
+
+.bk-spinner { animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
+
+.bk-terms {
+  font-size: 0.72rem;
+  color: $text-muted;
+  text-align: center;
+  line-height: 1.5;
+  margin-top: 0.75rem;
+}
+
+// ── Summary Aside ────────────────────────────────────────────────
+.bk-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__title {
+    color: $sky-200;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+  }
+
+  &__card {
+    background: #fff;
+    border-radius: $radius-lg;
+    padding: 1.5rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  }
+
+  &__airline {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  &__route {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__point {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    &--right { align-items: flex-end; }
+  }
+
+  &__code {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: $text-primary;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  &__time {
+    font-size: 0.72rem;
+    color: $text-secondary;
+    margin-top: 0.2rem;
+  }
+
+  &__meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+}
+
+.bk-airline-badge {
+  background: $sky-50;
+  color: $sky-600;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+}
+
+.bk-flight-ref { font-size: 0.72rem; color: $text-muted; }
+
+.bk-summary__track {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.bk-track-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: $sky-400;
+  flex-shrink: 0;
+}
+
+.bk-track-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, $sky-400, $sky-200);
+}
+
+.bk-track-plane { font-size: 0.9rem; color: $sky-400; }
+
+.bk-meta-item { display: flex; flex-direction: column; gap: 0.15rem; }
+
+.bk-meta-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: $text-muted;
+  font-weight: 600;
+}
+
+.bk-meta-value { font-size: 0.875rem; font-weight: 600; color: $text-primary; }
+
+// ── Fare Breakdown ───────────────────────────────────────────────
+.bk-fare {
+  background: #fff;
+  border-radius: $radius-md;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+
+  &__title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $text-secondary;
+    margin-bottom: 1rem;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: $text-secondary;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #f0f4f8;
+    &--tax { font-style: italic; }
+  }
+
+  &__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.85rem;
+    font-weight: 700;
+    color: $text-primary;
+    font-size: 0.95rem;
+  }
+
+  &__total-amount {
+    font-size: 1.4rem;
+    color: $sky-600;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+// ── Confirmation ─────────────────────────────────────────────────
+.bk-confirmation {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1.5rem 3rem;
+
+  &__card {
+    background: #fff;
+    border-radius: $radius-lg;
+    padding: 2.5rem 2rem;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  &__check {
+    width: 60px; height: 60px;
+    background: $success;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 1.75rem;
+    line-height: 60px;
+    margin: 0 auto 1.25rem;
+  }
+
+  &__title { font-size: 1.5rem; font-weight: 700; color: $text-primary; margin-bottom: 0.4rem; }
+  &__sub   { font-size: 0.875rem; color: $text-secondary; margin-bottom: 0.75rem; }
+  &__details { margin: 1.5rem 0; text-align: left; }
+  &__email { font-size: 0.8rem; color: $text-secondary; margin-top: 0.5rem; }
+}
+
+.bk-reference {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: $sky-600;
+  background: $sky-50;
+  padding: 0.5rem 1.5rem;
+  border-radius: $radius-sm;
+  display: inline-block;
+}
+
+.bk-conf-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #f0f4f8;
+  font-size: 0.875rem;
+
+  span:first-child { color: $text-secondary; }
+  span:last-child  { font-weight: 600; color: $text-primary; }
+
+  &--total {
+    border-bottom: none;
+    padding-top: 0.85rem;
+    font-size: 1rem;
+    font-weight: 700;
+    span:last-child { color: $sky-600; font-size: 1.2rem; }
+  }
+}
+
+// ── Confirmation passengers list ──────────────────────────────────
+.bk-conf-passengers {
+  margin: 1rem 0;
+  text-align: left;
+  border: 1px solid #e2eaf4;
+  border-radius: $radius-sm;
+  padding: 0.75rem 1rem;
+
+  &__title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $text-secondary;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.bk-conf-pax-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  padding: 0.35rem 0;
+  color: $text-primary;
+  border-bottom: 1px solid #f0f4f8;
+  &:last-child { border-bottom: none; }
+}
+
+.bk-lead-tag {
+  font-size: 0.68rem;
+  background: $sky-50;
+  color: $sky-400;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+// ── Responsive ───────────────────────────────────────────────────
+@media (max-width: 860px) {
+  .bk-layout { grid-template-columns: 1fr; }
+  .bk-summary { order: -1; }
+}
